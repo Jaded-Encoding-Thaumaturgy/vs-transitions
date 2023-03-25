@@ -1,5 +1,5 @@
 flake8==6.0.0
-mypy==0.991
+mypy==1.1.1
 mypy-extensions==0.4.3
 packaging==23.0
 pycodestyle==2.10.0
