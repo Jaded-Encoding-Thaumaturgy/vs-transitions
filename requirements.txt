@@ -1,4 +1,4 @@
-VapourSynth>=60
+VapourSynth>=64
 vstools>=2.1.0
 vskernels>=2.4.0
 vsexprtools>=1.4.4
