@@ -23,9 +23,8 @@ setuptools.setup(
     long_description=readme,
     long_description_content_type='text/markdown',
     project_urls={
-        'Source Code': 'https://github.com/Irrational-Encoding-Wizardry/vs-transitions',
-        'Documentation': 'https://vstransitions.encode.moe/en/latest/',
-        'Contact': 'https://discord.gg/qxTxVJGtst',
+        'Source Code': 'https://github.com/Jaded-Encoding-Thaumaturgy/vs-transitions',
+        'Contact': 'https://discord.gg/XTpc6Fa9eB',
     },
     install_requires=requirements,
     python_requires='>=3.11',

@@ -1,6 +1,6 @@
 # vs-transitions, a collection of functions for making transitions and reanimating static shots.
 
-For further support, drop by `#vstransitions` in the [IEW Discord server](https://discord.gg/qxTxVJGtst).
+For support you can check out the [JET Discord server](https://discord.gg/XTpc6Fa9eB). <br><br>
 
 ## How to install
 
@@ -13,6 +13,7 @@ pip install vstransitions
 Or if you want the latest git version, install it with this command:
 
 ```sh
-pip install git+https://github.com/Irrational-Encoding-Wizardry/vs-transitions.git
+pip install git+https://github.com/Jaded-Encoding-Thaumaturgy/vs-transitions.git
 ```
+
 <br>
