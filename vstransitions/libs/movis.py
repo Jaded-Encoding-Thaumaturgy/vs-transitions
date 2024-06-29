@@ -107,7 +107,16 @@ class MovisSceneVSWrap(cachedproperty.baseclass):
         self.scene._cache = {}
         self.width = self.scene.size[0]
         self.height = self.scene.size[1]
-        self.fps = fps or self.scene._layers[0].layer.fps  # type: ignore
+
+        if fps is None:
+            for layer in self.scene._layers:
+                if isinstance(layer, MovisVSVideoSource):
+                    self.fps = layer.video_node.fps
+                    break
+            else:
+                self.fps = Fraction(self.scene._layers[0].layer.fps)
+        else:
+            self.fps = fps
 
         self._base_clip = core.std.BlankClip(
             None, self.width, self.height, vs.RGB24, self.scene.duration * self.fps,
