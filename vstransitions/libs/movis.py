@@ -29,7 +29,7 @@ class MovisVSVideoSource:
             video_alpha_node = core.std.BlankClip(video_node, format=vs.GRAY8, color=255, keep=True)
 
         self.video_node = video_node.resize.Bicubic(format=vs.RGB24, **kwargs)
-        self.video_alpha_node = video_alpha_node
+        self.video_alpha_node = video_alpha_node.resize.Bicubic(format=vs.GRAY8)
 
         self.video_node.std.SetVideoCache(True)
         self.video_alpha_node.std.SetVideoCache(True)
