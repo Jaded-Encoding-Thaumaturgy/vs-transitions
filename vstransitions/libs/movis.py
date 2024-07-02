@@ -11,12 +11,20 @@ from vstools import FramesCache, KwargsT, cachedproperty, core, vs
 
 class MovisVSVideoSource:
     def __init__(
-        self, video_node: vs.VideoNode | tuple[vs.VideoNode, vs.VideoNode],
+        self, video_node: vs.VideoNode | tuple[vs.VideoNode, vs.VideoNode | bool],
         audio: vs.AudioNode | None = None, **kwargs: Any
     ) -> None:
+        video_alpha_node = True
+
         if isinstance(video_node, tuple):
             video_node, video_alpha_node = video_node
-        else:
+
+        try:
+            if not video_alpha_node:
+                raise TypeError
+
+            video_alpha_node = video_node.std.PropToClip('_Alpha')
+        except Exception:
             video_alpha_node = core.std.BlankClip(video_node, format=vs.GRAY8, color=255, keep=True)
 
         self.video_node = video_node.resize.Bicubic(format=vs.RGB24, **kwargs)
