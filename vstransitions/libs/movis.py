@@ -4,9 +4,10 @@ from fractions import Fraction
 from typing import Any
 
 import numpy as np
-from movis.layer.composition import Composition
 from vspyplugin import PyPluginNumpy
 from vstools import FramesCache, KwargsT, cachedproperty, core, vs
+
+from movis.layer.composition import Composition, LayerItem
 
 
 class MovisVSVideoSource:
@@ -118,11 +119,19 @@ class MovisSceneVSWrap(cachedproperty.baseclass):
 
         if fps is None:
             for layer in self.scene._layers:
+                if isinstance(layer, LayerItem):
+                    layer = layer.layer
+
                 if isinstance(layer, MovisVSVideoSource):
                     self.fps = layer.video_node.fps
                     break
             else:
-                self.fps = Fraction(self.scene._layers[0].layer.fps)
+                layer = self.scene._layers[0].layer
+
+                if isinstance(layer, LayerItem):
+                    layer = layer.layer
+
+                self.fps = Fraction(layer.fps)
         else:
             self.fps = fps
 
