@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from fractions import Fraction
+from threading import Lock
 from typing import Any
 
 import numpy as np
@@ -118,6 +119,8 @@ class MovisSceneVSWrap(cachedproperty.baseclass):
         self.width = self.scene.size[0]
         self.height = self.scene.size[1]
 
+        self.mutex = Lock()
+
         if fps is None:
             for layer in self.scene._layers:
                 if isinstance(layer, LayerItem):
@@ -149,9 +152,10 @@ class MovisSceneVSWrap(cachedproperty.baseclass):
 
         np.copyto(dst, frame[:, :, plane])
 
-        if len(self.scene._cache) > core.num_threads * 2:
-            for k in list(self.scene._cache.keys())[:core.num_threads]:
-                del self.scene._cache[k]
+        with self.mutex:
+            if len(self.scene._cache) > core.num_threads * 2:
+                for k in list(self.scene._cache.keys())[:core.num_threads]:
+                    del self.scene._cache[k]
 
     @cachedproperty
     def video(self) -> vs.VideoNode:
