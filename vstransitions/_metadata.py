@@ -1,6 +1,6 @@
 """VapourSynth functions for making transitions and reanimating static shots"""
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 __author_name__, __author_email__ = 'Setsugen no ao', 'setsugen@setsugen.dev'
 __maintainer_name__, __maintainer_email__ = __author_name__, __author_email__
