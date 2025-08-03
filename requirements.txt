@@ -1,2 +1,0 @@
-VapourSynth>=65
-vsjetpack>=0.1.1
