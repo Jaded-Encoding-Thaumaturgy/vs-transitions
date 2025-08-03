@@ -6,14 +6,14 @@ from math import ceil
 from typing import NamedTuple
 
 from vskernels import Catrom, Kernel, KernelT
-from vstools import CustomEnum, CustomIntEnum, change_fps, check_variable_format, clamp, vs, InvalidSubsamplingError
+from vstools import CustomEnum, CustomIntEnum, InvalidSubsamplingError, change_fps, check_variable_format, clamp, vs
 
 from .easing import EasingT, Linear, OnAxis
 
 __all__ = [
-    'PanDirection', 'PanFunction', 'PanFunctions',
+    "PanDirection", "PanFunction", "PanFunctions",
 
-    'panner'
+    "panner"
 ]
 
 
@@ -44,7 +44,7 @@ def panner(
     assert check_variable_format(stitched, panner)
 
     if (stitched.format.subsampling_h, stitched.format.subsampling_w) != (0, 0):
-        raise InvalidSubsamplingError(panner, stitched.format, "Stitched can't be subsampled!", reason='{subsampling}')
+        raise InvalidSubsamplingError(panner, stitched.format, "Stitched can't be subsampled!", reason="{subsampling}")
 
     kernelo = Kernel.ensure_obj(kernel, panner)
     clip_cfps = change_fps(clip, fps)
