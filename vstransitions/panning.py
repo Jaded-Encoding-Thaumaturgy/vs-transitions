@@ -5,16 +5,12 @@ from functools import partial
 from math import ceil
 from typing import NamedTuple
 
-from vskernels import Catrom, Kernel, KernelT
+from vskernels import Catrom, Kernel, KernelLike
 from vstools import CustomEnum, CustomIntEnum, InvalidSubsamplingError, change_fps, check_variable_format, clamp, vs
 
 from .easing import EasingT, Linear, OnAxis
 
-__all__ = [
-    "PanDirection", "PanFunction", "PanFunctions",
-
-    "panner"
-]
+__all__ = ["PanDirection", "PanFunction", "PanFunctions", "panner"]
 
 
 class PanDirection(CustomIntEnum):
@@ -36,9 +32,11 @@ class PanFunctions(PanFunction, CustomEnum):
 
 
 def panner(
-    clip: vs.VideoNode, stitched: vs.VideoNode,
+    clip: vs.VideoNode,
+    stitched: vs.VideoNode,
     pan_func: PanFunction | PanFunctions = PanFunctions.VERTICAL_TTB,
-    fps: Fraction = Fraction(24000, 1001), kernel: KernelT = Catrom
+    fps: Fraction = Fraction(24000, 1001),
+    kernel: KernelLike = Catrom,
 ) -> vs.VideoNode:
     assert check_variable_format(clip, panner)
     assert check_variable_format(stitched, panner)
@@ -67,9 +65,7 @@ def panner(
 
         x_c, y_c = ceil(x_v), ceil(y_v)
 
-        cropped = stitched.std.CropAbs(
-            clip.width + x_c, clip.height + y_c, int(x_e), int(y_e)
-        )
+        cropped = stitched.std.CropAbs(clip.width + x_c, clip.height + y_c, int(x_e), int(y_e))
 
         shifted = kernelo.shift(cropped, (y_v, x_v))
 

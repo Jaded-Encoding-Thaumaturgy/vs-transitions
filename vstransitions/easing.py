@@ -38,7 +38,7 @@ __all__ = [
     "QuinticEaseOut",
     "SineEaseIn",
     "SineEaseInOut",
-    "SineEaseOut"
+    "SineEaseOut",
 ]
 
 
@@ -51,12 +51,10 @@ class EasingBaseMeta(ABC):
         self.duration = duration
 
     @abstractmethod
-    def func(self, t: float) -> float:
-        ...
+    def func(self, t: float) -> float: ...
 
     @abstractmethod
-    def ease(self, alpha: float) -> float:
-        ...
+    def ease(self, alpha: float) -> float: ...
 
 
 EasingT = type[EasingBaseMeta]
