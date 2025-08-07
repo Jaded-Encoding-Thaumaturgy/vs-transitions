@@ -4,18 +4,41 @@ from abc import ABC, abstractmethod
 from math import cos, pi, sin, sqrt
 
 __all__ = [
-    'EasingT', 'EasingBaseMeta', 'EasingBase',
-    'OnAxis', 'Linear',
-    'QuadEaseIn', 'QuadEaseOut', 'QuadEaseInOut',
-    'CubicEaseIn', 'CubicEaseOut', 'CubicEaseInOut',
-    'QuarticEaseIn', 'QuarticEaseOut', 'QuarticEaseInOut',
-    'QuinticEaseIn', 'QuinticEaseOut', 'QuinticEaseInOut',
-    'SineEaseIn', 'SineEaseOut', 'SineEaseInOut',
-    'CircularEaseIn', 'CircularEaseOut', 'CircularEaseInOut',
-    'ExponentialEaseIn', 'ExponentialEaseOut', 'ExponentialEaseInOut',
-    'ElasticEaseIn', 'ElasticEaseOut', 'ElasticEaseInOut',
-    'BackEaseIn', 'BackEaseOut', 'BackEaseInOut',
-    'BounceEaseIn', 'BounceEaseOut', 'BounceEaseInOut'
+    "BackEaseIn",
+    "BackEaseInOut",
+    "BackEaseOut",
+    "BounceEaseIn",
+    "BounceEaseInOut",
+    "BounceEaseOut",
+    "CircularEaseIn",
+    "CircularEaseInOut",
+    "CircularEaseOut",
+    "CubicEaseIn",
+    "CubicEaseInOut",
+    "CubicEaseOut",
+    "EasingBase",
+    "EasingBaseMeta",
+    "EasingT",
+    "ElasticEaseIn",
+    "ElasticEaseInOut",
+    "ElasticEaseOut",
+    "ExponentialEaseIn",
+    "ExponentialEaseInOut",
+    "ExponentialEaseOut",
+    "Linear",
+    "OnAxis",
+    "QuadEaseIn",
+    "QuadEaseInOut",
+    "QuadEaseOut",
+    "QuarticEaseIn",
+    "QuarticEaseInOut",
+    "QuarticEaseOut",
+    "QuinticEaseIn",
+    "QuinticEaseInOut",
+    "QuinticEaseOut",
+    "SineEaseIn",
+    "SineEaseInOut",
+    "SineEaseOut",
 ]
 
 
@@ -28,12 +51,10 @@ class EasingBaseMeta(ABC):
         self.duration = duration
 
     @abstractmethod
-    def func(self, t: float) -> float:
-        ...
+    def func(self, t: float) -> float: ...
 
     @abstractmethod
-    def ease(self, alpha: float) -> float:
-        ...
+    def ease(self, alpha: float) -> float: ...
 
 
 EasingT = type[EasingBaseMeta]

@@ -5,35 +5,30 @@ from vstools import FrameRangeN, FrameRangesN, insert_clip, normalize_ranges, vs
 from .easing import EasingT, Linear
 
 __all__ = [
-    'fade', 'fade_freeze',
-
-    'fade_in', 'fade_out',
-    'fade_in_freeze', 'fade_out_freeze',
-
-    'crossfade',
-
-    'fade_ranges'
+    "crossfade",
+    "fade",
+    "fade_freeze",
+    "fade_in",
+    "fade_in_freeze",
+    "fade_out",
+    "fade_out_freeze",
+    "fade_ranges",
 ]
 
 
 def fade(
-    clipa: vs.VideoNode, clipb: vs.VideoNode, invert: bool, start: int,
-    end: int, function: EasingT = Linear
+    clipa: vs.VideoNode, clipb: vs.VideoNode, invert: bool, start: int, end: int, function: EasingT = Linear
 ) -> vs.VideoNode:
     clipa_cut = clipa[start:end]
     clipb_cut = clipb[start:end]
 
-    if invert:
-        fade = crossfade(clipa_cut, clipb_cut, function)
-    else:
-        fade = crossfade(clipb_cut, clipa_cut, function)
+    fade = crossfade(clipa_cut, clipb_cut, function) if invert else crossfade(clipb_cut, clipa_cut, function)
 
     return insert_clip(clipa, fade, start)
 
 
 def fade_freeze(
-    clipa: vs.VideoNode, clipb: vs.VideoNode, invert: bool, start: int,
-    end: int, function: EasingT = Linear
+    clipa: vs.VideoNode, clipb: vs.VideoNode, invert: bool, start: int, end: int, function: EasingT = Linear
 ) -> vs.VideoNode:
     start_f, end_f = (start, end) if invert else (end, start)
 
@@ -42,7 +37,10 @@ def fade_freeze(
     return fade(
         insert_clip(clipa, clipa[start_f] * length, start),
         insert_clip(clipb, clipb[end_f] * length, start),
-        invert, start, end, function
+        invert,
+        start,
+        end,
+        function,
     )
 
 
@@ -63,13 +61,12 @@ def fade_out_freeze(clip: vs.VideoNode, start: int, end: int, function: EasingT 
 
 
 def crossfade(
-    clipa: vs.VideoNode, clipb: vs.VideoNode, function: EasingT,
-    debug: bool | int | tuple[int, int] = False
+    clipa: vs.VideoNode, clipb: vs.VideoNode, function: EasingT, debug: bool | int | tuple[int, int] = False
 ) -> vs.VideoNode:
     assert clipa.format and clipb.format
 
     if not clipa.height == clipb.height and clipa.width == clipb.width and clipa.format.id == clipb.format.id:
-        raise ValueError('crossfade: Both clips must have the same length, dimensions and format.')
+        raise ValueError("crossfade: Both clips must have the same length, dimensions and format.")
 
     ease_function = function(0, 1, clipa.num_frames)
 
@@ -82,8 +79,11 @@ def crossfade(
 
 
 def fade_ranges(
-    clip_a: vs.VideoNode, clip_b: vs.VideoNode, ranges: FrameRangeN | FrameRangesN,
-    fade_length: int = 5, ease_func: EasingT = Linear
+    clip_a: vs.VideoNode,
+    clip_b: vs.VideoNode,
+    ranges: FrameRangeN | FrameRangesN,
+    fade_length: int = 5,
+    ease_func: EasingT = Linear,
 ) -> vs.VideoNode:
     nranges = normalize_ranges(clip_b, ranges)
     nranges = [(s - fade_length, e + fade_length) for s, e in nranges]
