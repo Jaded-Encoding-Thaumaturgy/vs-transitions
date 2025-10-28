@@ -5,8 +5,9 @@ from functools import partial
 from math import ceil
 from typing import NamedTuple
 
+from jetpytools import CustomEnum, CustomIntEnum, CustomValueError, clamp
 from vskernels import Catrom, Kernel, KernelLike
-from vstools import CustomEnum, CustomIntEnum, InvalidSubsamplingError, change_fps, check_variable_format, clamp, vs
+from vstools import change_fps, check_variable_format, vs
 
 from .easing import EasingT, Linear, OnAxis
 
@@ -42,7 +43,7 @@ def panner(
     assert check_variable_format(stitched, panner)
 
     if (stitched.format.subsampling_h, stitched.format.subsampling_w) != (0, 0):
-        raise InvalidSubsamplingError(panner, stitched.format, "Stitched can't be subsampled!", reason="{subsampling}")
+        raise CustomValueError("Stitched can't be subsampled!", panner)
 
     kernelo = Kernel.ensure_obj(kernel, panner)
     clip_cfps = change_fps(clip, fps)
